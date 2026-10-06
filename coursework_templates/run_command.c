@@ -11,6 +11,7 @@ void execute_line(char** args) {
   int f = fork();
   if (f ==0){
     exec(args[0], args);
+    exit(0);
   }
   else{
     wait(0);
