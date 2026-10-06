@@ -9,13 +9,16 @@ void execute_line(char** args) {
   // run wait() if it is a parent.
   // For guidance, the model solution has 9 lines of code.
   int pro = fork();
+  //check if the fork worked or returned a value less than 0
   if (pro<0){
     fprintf(2, "run_command: fork failed\n");
+  //if the fork worked it returns 0 if its the child
   }else if (pro == 0){
     exec(args[0],args);
     //exec only returns when it fails
     fprintf(2, "run_command: exec %s failed\n", args[0]);
     exit(1);
+    //returns 1 if parent and makes it wait
   }else{
     wait(0);
   }
@@ -43,19 +46,24 @@ int main(int argc, char *argv[]) {
     // been fully entered ('\n' is found in b), execute the command by calling
     // execute_line().
     // For guidance, the model solution has 10 lines of code in this loop.
+    //check if the value pointer is the end of the string
     if (*b == '\n'){
+      //changes the end value to a 0
       *b = '\0';
       
+      //checks if the quit option is entered as first value is q and the end pointer would be changed to 0
       if (buf[0] == 'q' && buf[1] == '\0'){
         exit(0);
       }
 
+      //execute the line of code
       execute_line(args);
 
       b = buf;
       fprintf(2, "Please enter command and press enter (type 'q' to exit):\n");
     }
     else{
+      //inrament the buffer value
       b++;
     }
   }
