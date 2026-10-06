@@ -8,14 +8,18 @@ void execute_line(char** args) {
   // is a parent or a child, and run exec() if it is a child, and
   // run wait() if it is a parent.
   // For guidance, the model solution has 9 lines of code.
-  int f = fork();
-  if (f ==0){
-    exec(args[0], args);
-    exit(0);
-  }
-  else{
+  int pro = fork();
+  if (pro<0){
+    fprintf(2, "run_command: fork failed\n");
+  }else if (pro == 0){
+    exec(args[0],args);
+    //exec only returns when it fails
+    fprintf(2, "run_command: exec %s failed\n", args[0]);
+    exit(1);
+  }else{
     wait(0);
   }
+
 }
 
 
@@ -49,6 +53,7 @@ int main(int argc, char *argv[]) {
       execute_line(args);
 
       b = buf;
+      fprintf(2, "Please enter command and press enter (type 'q' to exit):\n");
     }
     else{
       b++;
