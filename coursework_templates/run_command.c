@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
   char buf[512], *b;
   // Point b to the first character in the line.
   b = buf;
+  args[0] = buf;
 
   // Read characters from the standard input. When we find '\n' that
   // means one line has terminated - execute the command.
@@ -38,7 +39,9 @@ int main(int argc, char *argv[]) {
     // execute_line().
     // For guidance, the model solution has 10 lines of code in this loop.
     if (*b == '\n'){
+      *b = '\0';
       execute_line(args);
+      b = buf;
     }
     else{
       b++;
