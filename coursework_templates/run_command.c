@@ -40,7 +40,13 @@ int main(int argc, char *argv[]) {
     // For guidance, the model solution has 10 lines of code in this loop.
     if (*b == '\n'){
       *b = '\0';
+      
+      if (buf[0] == 'q' && buf[1] == '\0'){
+        exit(0);
+      }
+
       execute_line(args);
+
       b = buf;
     }
     else{
